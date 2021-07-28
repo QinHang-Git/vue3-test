@@ -1,11 +1,11 @@
 <template>
-  <router-view></router-view>
+  <div>joke</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent ({
-  name:"APP",
+  name:"Joke",
   components: {},
   setup() {
     
