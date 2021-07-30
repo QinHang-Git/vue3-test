@@ -14,7 +14,7 @@ export function register(data:UserInfo):AxiosPromise<any>{
     data,
   })
 }
-export function getUserList():AxiosPromise<any>{
+export function getUserList():any{
   return request({
     url:"http://192.168.1.135:3001/userlist",
     method:'get',

@@ -3,7 +3,7 @@
     title="登录"
     left-text="返回"
     left-arrow
-    @click-left="onClickLeft"
+    @click-left="toBackPage"
   />
   <div v-if="loginOrReg"> 
     <van-field v-model="userInfo.username" label="用户名" />
@@ -21,16 +21,16 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import useUserInfo from '@/hooks/useUserInfo'
-
-import router from '@/router/index'
+import useRouterList from '@/hooks/useRouterList'
 
 export default defineComponent ({
-  name:"login",
+  name:"LoginAndReg",
   components: {},
   setup() {
     // 登录user相关内容
     const { userInfo, regInfo, toLogin, toRegister } = useUserInfo()
-
+    const { toBackPage } = useRouterList()
+    
     const loginOrReg = ref(true)
 
     const formItem = [
@@ -43,16 +43,13 @@ export default defineComponent ({
       { label:'手机号', prop:'phone'},
     ]
 
-    const onClickLeft = function (){
-      router.back()
-    }
     const switchLoginOrReg = function (){
       loginOrReg.value = !loginOrReg.value
     }
     return {
       userInfo, regInfo, toLogin, toRegister,
       loginOrReg,
-      onClickLeft,
+      toBackPage,
       switchLoginOrReg,
       formItem
     }

@@ -1,8 +1,8 @@
 <template>
   <van-nav-bar title="个人中心" />
   <div class="profile">
-    <van-button v-if="!loginInfo.loginStatus" class="to-login" type="primary" round @click="loginHandle">登录 / 注册</van-button> 
-    <div v-else class="had-login" @click="logoutHandle">
+    <van-button v-if="!loginInfo.loginStatus" class="to-login" type="primary" round @click="toLoginPage">登录 / 注册</van-button> 
+    <div v-else class="had-login" @click="toLogoutPage">
       <van-icon size="80" name="https://b.yzcdn.cn/vant/icon-demo-1126.png" />
       <div>
         <div class="user-name">欢迎您：{{loginInfo.nickname || '未填写昵称'}}</div>
@@ -14,8 +14,8 @@
     </van-grid>
 
     <van-list>
+      <van-cell @click="toUserListPage" title="用户列表" />
       <van-cell  title="我的关注" />
-      <van-cell @click="toGetUserList" title="用户列表" />
       <van-cell  title="我的关注" />
       <van-cell  title="我的关注" />
       <van-cell  title="我的关注" />
@@ -27,8 +27,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
-import router from '@/router/index'
 import useUserInfo from '@/hooks/useUserInfo'
+import useRouterList from '@/hooks/useRouterList'
 
 export default defineComponent ({
   name:"Profile",
@@ -36,18 +36,14 @@ export default defineComponent ({
   setup() {
     // 获取个人信息，登出系统
     const {loginInfo, toGetProfile, toGetUserList} = useUserInfo()
+    const {toLoginPage, toLogoutPage, toUserListPage} = useRouterList()
     onMounted(()=>{
       toGetProfile()
     })
-    const loginHandle = () => {
-      router.push('/login')
-    }
-    const logoutHandle = () =>{
-      router.push('/logout')
-    }
     return {
-      loginHandle,
-      logoutHandle,
+      toLoginPage,
+      toLogoutPage,
+      toUserListPage,
       loginInfo,
       toGetUserList
     }

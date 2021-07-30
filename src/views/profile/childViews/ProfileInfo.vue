@@ -3,7 +3,7 @@
     title="个人资料" 
     left-text="返回"
     left-arrow
-    @click-left="onClickLeft"/>
+    @click-left="toBackPage"/>
   <van-list class="form-list">
     <van-cell v-for="item in formItem" :key="item.prop" :title="item.label">{{loginInfo[item.prop] || '未填写'}}</van-cell>
   </van-list>
@@ -15,13 +15,14 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import useUserInfo from '@/hooks/useUserInfo'
+import useRouterList from '@/hooks/useRouterList'
 
-import router from '@/router/index'
 export default defineComponent ({
-  name:"Logout",
+  name:"ProfileInfo",
   components: {},
   setup() {
     const {loginInfo, toLogout, toGetProfile} = useUserInfo()
+    const { toBackPage } = useRouterList()
 
     const formItem = [
       { label:'用户名', prop:'username'},
@@ -35,13 +36,10 @@ export default defineComponent ({
       toGetProfile()
     })
 
-    const onClickLeft = function (){
-      router.back()
-    }
     return {
       loginInfo, toLogout,
       formItem,
-      onClickLeft,
+      toBackPage,
     }
   }
 })

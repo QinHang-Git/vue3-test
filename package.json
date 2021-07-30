@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/js-cookie": "^2.2.7",
+    "@types/webpack-merge": "^5.0.0",
     "core-js": "^3.6.5",
     "vant": "^3.0.16",
     "vue": "^3.0.0",

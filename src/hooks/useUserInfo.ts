@@ -23,7 +23,7 @@ export default function ():any {
     loginStatus:false,
     username:''
   })
-
+  const userList = reactive([])
   const toLogin = ()=>{
     login(userInfo).then((res)=>{
       const token = (res as any).token
@@ -62,7 +62,7 @@ export default function ():any {
   }
   const toGetUserList = () => {
     getUserList().then((res)=>{
-      console.log(res);
+      userList.push(...res)
     })
   }
 
@@ -70,6 +70,7 @@ export default function ():any {
     userInfo,
     regInfo,
     loginInfo,
+    userList,
     toLogin,
     toLogout,
     toRegister,

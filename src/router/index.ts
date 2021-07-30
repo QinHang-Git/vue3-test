@@ -6,6 +6,7 @@ import Profile from '@/views/profile/index.vue'
 
 import ProfileInfo from '@/views/profile/childViews/ProfileInfo.vue'
 import LoginAndReg from '@/views/profile/childViews/LoginAndReg.vue'
+import UserList from '@/views/profile/childViews/UserList.vue'
 import Business from '@/views/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -50,7 +51,12 @@ const routes: Array<RouteRecordRaw> = [
     path:'/logout',
     name: 'Logout',
     component: ProfileInfo  
-  }
+  },
+  {
+    path:'/userList',
+    name: 'UserList',
+    component: UserList  
+  },
 ]
 
 const router = createRouter({
