@@ -2,58 +2,54 @@
   <van-nav-bar title="个人中心" />
   <div class="profile">
     <van-button v-if="!loginInfo.loginStatus" class="to-login" type="primary" round @click="loginHandle">登录 / 注册</van-button> 
-    <div v-else >
-      <div class="had-login">
-        <van-icon size="80" name="https://b.yzcdn.cn/vant/icon-demo-1126.png" />
-        <div>
-          <div class="user-name">欢迎您：{{loginInfo.username}}</div>
-        </div>
+    <div v-else class="had-login" @click="logoutHandle">
+      <van-icon size="80" name="https://b.yzcdn.cn/vant/icon-demo-1126.png" />
+      <div>
+        <div class="user-name">欢迎您：{{loginInfo.nickname || '未填写昵称'}}</div>
+        <div class="user-info">查看个人资料</div>
       </div>
-      <van-button type="primary" @click="logoutHandle">退出登录</van-button>
     </div>
+    <van-grid :column-num="4">
+      <van-grid-item v-for="value in 4" :key="value" icon="photo-o" text="文字" />
+    </van-grid>
+
+    <van-list>
+      <van-cell  title="我的关注" />
+      <van-cell @click="toGetUserList" title="用户列表" />
+      <van-cell  title="我的关注" />
+      <van-cell  title="我的关注" />
+      <van-cell  title="我的关注" />
+      <van-cell  title="我的关注" />
+      <van-cell  title="我的关注" />
+    </van-list>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import router from '@/router/index'
-import useLoginHook from '@/components/login/hook/useLoginHook'
+import useUserInfo from '@/hooks/useUserInfo'
+
 export default defineComponent ({
   name:"Profile",
   components: {},
   setup() {
-    const loginInfo = reactive({
-      loginStatus:false,
-      username:''
+    // 获取个人信息，登出系统
+    const {loginInfo, toGetProfile, toGetUserList} = useUserInfo()
+    onMounted(()=>{
+      toGetProfile()
     })
-    const getProfile = useLoginHook().getProfile
-    const logout = useLoginHook().tologoutHandle
-
-    const loginHandle = function(){
+    const loginHandle = () => {
       router.push('/login')
     }
-    const logoutHandle = function(){
-      console.log('aaaa');
-      logout()
-      checkLoginStatus()
+    const logoutHandle = () =>{
+      router.push('/logout')
     }
-    const checkLoginStatus = async()=>{
-      let result = await getProfile() 
-      if(result){
-        loginInfo.username = result.username
-        loginInfo.loginStatus = true
-      } else {
-        loginInfo.loginStatus = false
-      }
-      console.log(loginInfo.loginStatus);
-    }
-    onMounted(async()=>{
-      checkLoginStatus()
-    })
     return {
       loginHandle,
       logoutHandle,
       loginInfo,
+      toGetUserList
     }
   },
 })
@@ -68,20 +64,23 @@ export default defineComponent ({
   flex-direction: column;
 }
 .to-login{
-  margin-top: 20px;
+  margin: 20px 0;
   align-self:center
 }
 .had-login{
   display: flex;
   width: calc( 100% - 40px );
-  box-shadow: 1px 1px #666;
-  margin-left: 20px;
-  margin-top: 30px;
-  border: solid 1px #ffd4d4;
+  margin:30px 20px;
 }
 .user-name{
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 20px;
   font-size: 20px;
+}
+.user-info{
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 12px;
+  color: rgb(82, 142, 231);
 }
 </style>

@@ -4,7 +4,8 @@ import Shop from '@/views/shop/index.vue'
 import Joke from '@/views/joke/index.vue'
 import Profile from '@/views/profile/index.vue'
 
-import Login from '@/components/login/index.vue'
+import ProfileInfo from '@/views/profile/childViews/ProfileInfo.vue'
+import LoginAndReg from '@/views/profile/childViews/LoginAndReg.vue'
 import Business from '@/views/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -15,6 +16,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/business',
     name: 'Business',
+    redirect: '/business/home',
     component: Business,
     children:[
       {
@@ -42,7 +44,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path:'/login',
     name: 'Login',
-    component: Login
+    component: LoginAndReg
+  },
+  {
+    path:'/logout',
+    name: 'Logout',
+    component: ProfileInfo  
   }
 ]
 

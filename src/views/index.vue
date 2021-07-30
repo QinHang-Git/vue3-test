@@ -5,7 +5,7 @@
   <van-tabbar v-model="active">
     <van-tabbar-item replace to="/business/home" icon="home-o">主页</van-tabbar-item>
     <van-tabbar-item replace to="/business/shop" icon="search">商城</van-tabbar-item>
-    <van-tabbar-item replace to="/business/joke" icon="friends-o">笑话</van-tabbar-item>
+    <van-tabbar-item replace to="/business/joke" icon="friends-o">名单</van-tabbar-item>
     <van-tabbar-item replace to="/business/profile" icon="setting-o">我的</van-tabbar-item>
   </van-tabbar>
 </template>

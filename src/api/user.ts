@@ -31,7 +31,6 @@ export function profile(data:string):AxiosPromise<any>{
   return request({
     url:"http://192.168.1.135:3001/profile",
     method:'get',
-    headers: { 'Authorization': 'Bearer ' + data}
   })
 }
 

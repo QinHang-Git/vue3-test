@@ -8,21 +8,19 @@
   <div v-if="loginOrReg"> 
     <van-field v-model="userInfo.username" label="用户名" />
     <van-field v-model="userInfo.password" type="password" label="密码" />
-    <van-button class="button-login" type="primary" size="large" @click="tologinHandle">登录</van-button>
+    <van-button class="button-login" type="primary" size="large" @click="toLogin">登录</van-button>
     <a class="link-login" @click="switchLoginOrReg">现在注册</a>
   </div>
   <div v-else>
-    <van-field v-model="userInfo.username" label="用户名" />
-    <van-field v-model="userInfo.password" type="password" label="密码" />
-    <van-field v-model="userInfo.passwordCheck" type="password" label="再次输入密码" />
-    <van-button class="button-login" type="primary" size="large" @click="toRegisterHandle">注册</van-button>
+    <van-field v-for="item in formItem" :key="item.prop" v-model="regInfo[item.prop]" :label="item.label" />
+    <van-button class="button-login" type="primary" size="large" @click="toRegister">注册</van-button>
     <a class="link-login" @click="switchLoginOrReg">已有账号，现在登录</a>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import useLoginHook from './hook/useLoginHook'
+import useUserInfo from '@/hooks/useUserInfo'
 
 import router from '@/router/index'
 
@@ -31,9 +29,19 @@ export default defineComponent ({
   components: {},
   setup() {
     // 登录user相关内容
-    const loginHook = useLoginHook()
+    const { userInfo, regInfo, toLogin, toRegister } = useUserInfo()
 
     const loginOrReg = ref(true)
+
+    const formItem = [
+      { label:'用户名', prop:'username'},
+      { label:'昵称', prop:'nickname'},
+      { label:'密码', prop:'password'},
+      { label:'再次输入密码', prop:'passwordCheck'},
+      { label:'性别', prop:'gender'},
+      { label:'生日', prop:'birthday'},
+      { label:'手机号', prop:'phone'},
+    ]
 
     const onClickLeft = function (){
       router.back()
@@ -42,10 +50,11 @@ export default defineComponent ({
       loginOrReg.value = !loginOrReg.value
     }
     return {
-      ...loginHook,
+      userInfo, regInfo, toLogin, toRegister,
       loginOrReg,
       onClickLeft,
-      switchLoginOrReg
+      switchLoginOrReg,
+      formItem
     }
   },
 })
